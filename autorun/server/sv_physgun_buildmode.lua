@@ -8,6 +8,8 @@ local pb_ = "physgun_buildmode_"
 
 local buildmode_ents = {}
 
+local CPPIEnabled = FindMetaTable("Entity") and true or false
+if not CPPIEnabled then print("[Physgun Build Mode] WARNING: No CPPI-Compatible prop protection found!") end
 
 //********************************************************************************************************************//
 // Client settings
@@ -15,7 +17,7 @@ local buildmode_ents = {}
 
 // Get physgun settings from the player
 local function Update_Settings( ply )
-	if !IsValid( ply ) then return false end
+	if not IsValid( ply ) then return false end
 	
 	if ply:GetInfoNum( pb_.. "enabled" , 0) ~= 0 then
 		local status = {}
@@ -65,7 +67,8 @@ end
 
 // Let the client know that Physgun Build Mode is enabled on server
 local function Notify_Player( ply )
-	SendUserMessage( "Server_Has_PhysBuildMode", ply )
+	net.Start( "Server_Has_PhysBuildMode" )
+	net.Send( ply )
 end
 
 hook.Add( "PlayerInitialSpawn", "Physgun Build Mode:Player Spawn", Notify_Player )
@@ -89,7 +92,7 @@ local function limit_rotation( ent )
 	local status = buildmode_ents[ent]
 
 	// Use adv ballsocket to prevent the prop from rotating
-	if !status.ballsockets then
+	if not status.ballsockets then
 		local pos = ent:GetPos()
 		status.ballsockets = {}
 		status.ballsockets[1] = constraint.AdvBallsocket( ent, game.GetWorld(), 0, 0, pos, pos, 0, 0, 0, -180, -180, 0, 180, 180, 0, 0, 0, 1, 0 )
@@ -177,7 +180,7 @@ end
 
 hook.Add( "Tick", "Physgun Build Mode:Snap", function()
 	local r, e = pcall( Phys_Snap )
-	if !r then print("Physgun Build Mode Snap Error: " .. e) end
+	if not r then print("Physgun Build Mode Snap Error: " .. e) end
 end)
 
 
@@ -188,14 +191,19 @@ end)
 // This is so that the Phys_Drop function can call to the Phys_Grab function and vice-versa
 local Phys_Grab = function() end
 
+local function isPropMine( ply, ent )
+	if not CPPIEnabled then return true end
+	return ent:CPPIGetOwner() == ply
+end
+
 local function Phys_Drop( ply, ent )
-	if !IsValid( ply ) or !IsValid( ent ) then
+	if not IsValid( ply ) or not IsValid( ent ) or not isPropMine( ply, ent ) then
 		buildmode_ents[ent] = nil
 		return false
 	end
 	
 	// Check in case player enabled build mode while holding a prop
-	if !buildmode_ents[ent] then
+	if not buildmode_ents[ent] then
 		if ply:GetInfoNum( pb_.. "enabled" , 0) ~= 0 then
 			Phys_Grab( ply, ent )
 		end
@@ -242,7 +250,7 @@ local function Phys_Drop( ply, ent )
 end
 
 Phys_Grab = function( ply, ent )
-	if IsValid( ent ) and IsValid( ply ) and !IsValid( ent:GetParent() ) then
+	if IsValid( ent ) and IsValid( ply ) and not IsValid( ent:GetParent() ) and isPropMine( ply, ent ) then
 		// Check if ent is already being held
 		if buildmode_ents[ent] then
 			Phys_Drop( buildmode_ents[ent].ply, ent )
@@ -271,10 +279,12 @@ end
 
 hook.Add( "PhysgunDrop", "Physgun Build Mode:Drop", function( ply, ent )
 	local r, e = pcall( Phys_Drop, ply, ent )
-	if !r then print("Physgun Build Mode Drop Error: " .. e) end
+	if not r then print("[Physgun Build Mode] Drop Error: " .. e) end
 end)
 
 hook.Add( "PhysgunPickup", "Physgun Build Mode:Pickup", function( ply, ent )
 	local r, e = pcall( Phys_Grab, ply, ent )
-	if !r then print("Physgun Build Mode Pickup Error: " .. e) end
+	if not r then print("[Physgun Build Mode] Pickup Error: " .. e) end
 end)
+
+print("[Physgun Build Mode] Finished loading")

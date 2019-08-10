@@ -43,7 +43,7 @@ end
 // Derma controls
 //********************************************************************************************************************//
 
-hook.Add( "PopulateToolMenu", "CustomMenuSettings", function()
+hook.Add( "PopulateToolMenu", "Physgun Build Mode:CustomMenuSettings", function()
 	
 	spawnmenu.AddToolMenuOption( "Options", "Player", "Custom_Menu", "Physgun Build Mode", "", "", function( panel )
 		
@@ -118,14 +118,14 @@ end )
 // Receive notification that server has Physgun Build Mode enabled
 local buildmode_enabled = false
 
-usermessage.Hook("Server_Has_PhysBuildMode", function()
+net.Receive("Server_Has_PhysBuildMode", function()
 	buildmode_enabled = true
 	print("Physgun build mode is available on this server")
 end )
 
 // Toggle on/off
 local function Buildmode_Toggle ( ply, cmd, args )
-	if !buildmode_enabled then
+	if not buildmode_enabled then
 		RunConsoleCommand( pb_.. "check_server" )
 	end
 	
