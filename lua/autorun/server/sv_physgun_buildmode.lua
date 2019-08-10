@@ -33,14 +33,14 @@ local function Update_Settings( ply )
 			local snap_position = Vector(0,0,0)
 			local snap_origin = Vector(0,0,0)
 			
-			snap_position.x = math.max( 0, ply:GetInfoNum( pb_.. "grid_x" , 0) )
-			snap_position.y = math.max( 0, ply:GetInfoNum( pb_.. "grid_y" , 0) )
-			snap_position.z = math.max( 0, ply:GetInfoNum( pb_.. "grid_z" , 0) )
+			snap_position.x = math.Clamp( ply:GetInfoNum( pb_.. "grid_x" , 0), 0, 64 )
+			snap_position.y = math.Clamp( ply:GetInfoNum( pb_.. "grid_y" , 0), 0, 64 )
+			snap_position.z = math.Clamp( ply:GetInfoNum( pb_.. "grid_z" , 0), 0, 64 )
 			
 			if snap_position ~= Vector(0,0,0) then
-				snap_origin.x = math.max( 0, ply:GetInfoNum( pb_.. "origin_x" , 0) )
-				snap_origin.y = math.max( 0, ply:GetInfoNum( pb_.. "origin_y" , 0) )
-				snap_origin.z = math.max( 0, ply:GetInfoNum( pb_.. "origin_z" , 0) )
+				snap_origin.x = math.Clamp( ply:GetInfoNum( pb_.. "origin_x" , 0), -64, 64 )
+				snap_origin.y = math.Clamp( ply:GetInfoNum( pb_.. "origin_y" , 0), -64, 64 )
+				snap_origin.z = math.Clamp( ply:GetInfoNum( pb_.. "origin_z" , 0), -64, 64 )
 				
 				status.snap_position = snap_position
 				status.snap_origin = snap_origin
