@@ -9,7 +9,7 @@ local pb_ = "physgun_buildmode_"
 
 local buildmode_ents = {}
 
-local CPPIEnabled = FindMetaTable("Entity") and true or false
+local CPPIEnabled = FindMetaTable("Entity").CPPIGetOwner and true or false
 if not CPPIEnabled then print("[Physgun Build Mode] WARNING: No CPPI-Compatible prop protection found!") end
 
 //********************************************************************************************************************//
