@@ -1,6 +1,7 @@
 // Physgun Build Mode - by Wenli
 if CLIENT then return end
 
+util.AddNetworkString( "Server_Has_PhysBuildMode" )
 AddCSLuaFile( "autorun/client/cl_physgun_buildmode.lua" )
 
 local pb = "physgun_buildmode"
