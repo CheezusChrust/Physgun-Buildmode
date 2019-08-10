@@ -102,9 +102,9 @@ hook.Add( "PopulateToolMenu", "Physgun Build Mode:CustomMenuSettings", function(
 		
 		panel:CheckBox( "Snap Angles", pb_.."snap_angles" )
 		
-		panel:NumSlider( "Angles - Pitch", "angles_p", 0, 180, 1 )
-		panel:NumSlider( "Angles - Yaw", "angles_y", 0, 180, 1 )
-		panel:NumSlider( "Angles - Roll", "angles_r", 0, 180, 1 )
+		panel:NumSlider( "Angles - Pitch", pb_.."angles_p", 0, 180, 1 )
+		panel:NumSlider( "Angles - Yaw", pb_.."angles_y", 0, 180, 1 )
+		panel:NumSlider( "Angles - Roll", pb_.."angles_r", 0, 180, 1 )
 		
 	end )
 	
