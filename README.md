@@ -3,7 +3,7 @@ A fixed version of the Physgun Buildmode addon for Garry's Mod.
 
 *Originally created by [Wenli](https://web.archive.org/web/20190407000613/https://forum.facepunch.com/gmodgd/jgup/Wenli-s-Build-Tools/1/)*
 
-*Uploaded to the workshop & fixed for GMod 12 by [hoyo321](https://steamcommunity.com/profiles/76561198009199929)*
+*Uploaded to the workshop & fixed for GMod 13 by [hoyo321](https://steamcommunity.com/profiles/76561198009199929)*
 
 *Further 2018 fixes by [Divalent](https://steamcommunity.com/profiles/76561198119736770)*
 
