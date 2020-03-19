@@ -4,9 +4,8 @@ util.AddNetworkString("Server_Has_PhysBuildMode")
 AddCSLuaFile("autorun/client/cl_physgun_buildmode.lua")
 local pb_ = "physgun_buildmode_"
 local buildmode_ents = {}
-local CPPIEnabled = FindMetaTable("Entity").CPPIGetOwner and true or false
 
-if not CPPIEnabled then
+if not CPPI then
     print("[Physgun Build Mode] WARNING: No CPPI-Compatible prop protection found!")
 end
 
@@ -195,7 +194,7 @@ end)
 local Phys_Grab = function() end
 
 local function isPropMine(ply, ent)
-    if not CPPIEnabled then return true end
+    if not CPPI then return true end
 
     return ent:CPPIGetOwner() == ply
 end
