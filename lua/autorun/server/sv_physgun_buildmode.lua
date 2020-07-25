@@ -1,6 +1,5 @@
 -- Physgun Build Mode - by Wenli
 
-AddCSLuaFile("autorun/client/cl_physgun_buildmode.lua")
 local pb_ = "physgun_buildmode_"
 local buildmode_ents = {}
 
