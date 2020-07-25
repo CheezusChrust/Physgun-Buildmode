@@ -1,5 +1,5 @@
 -- Physgun Build Mode - by Wenli
-if SERVER then return end
+
 local pb_ = "physgun_buildmode_"
 CreateClientConVar(pb_ .. "enabled", 0, true, true)
 
@@ -38,7 +38,7 @@ end
 hook.Add("PopulateToolMenu", "Physgun Build Mode:CustomMenuSettings", function()
     spawnmenu.AddToolMenuOption("Options", "Player", "Custom_Menu", "Physgun Build Mode", "", "", function(panel)
         panel:ClearControls()
-        local checkbox_enabled = panel:CheckBox("Enabled", "phys_buildmode")
+        local checkbox_enabled = panel:CheckBox("Enabled", "physgun_buildmode_enabled")
         checkbox_enabled:SetTooltip("You can also use the concommand phys_buildmode to toggle on/off")
         local checkbox_sleep = panel:CheckBox("Sleep Instead of Freeze", pb_ .. "sleep")
         checkbox_sleep:SetTooltip("If sleep is enabled, the prop will move again if pushed or hit")
@@ -87,31 +87,14 @@ end)
 --********************************************************************************************************************//
 -- Server-related functions
 --********************************************************************************************************************//
--- Receive notification that server has Physgun Build Mode enabled
-local buildmode_enabled = false
-
-net.Receive("Server_Has_PhysBuildMode", function()
-    buildmode_enabled = true
-    print("Physgun build mode is available on this server")
-end)
 
 -- Toggle on/off
-local function Buildmode_Toggle(ply, cmd, args)
-    if not buildmode_enabled then
-        RunConsoleCommand(pb_ .. "check_server")
-    end
-
+local function Buildmode_Toggle(ply)
     if GetConVar(pb_ .. "enabled"):GetInt() == 0 then
-        if buildmode_enabled then
-            ply:ChatPrint("Physgun Build Mode enabled")
-        end
-
+        ply:ChatPrint("Physgun Build Mode enabled")
         RunConsoleCommand(pb_ .. "enabled", "1")
     else
-        if buildmode_enabled then
-            ply:ChatPrint("Physgun Build Mode disabled")
-        end
-
+        ply:ChatPrint("Physgun Build Mode disabled")
         RunConsoleCommand(pb_ .. "enabled", "0")
     end
 end

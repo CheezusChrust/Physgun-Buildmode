@@ -1,6 +1,5 @@
 -- Physgun Build Mode - by Wenli
-if CLIENT then return end
-util.AddNetworkString("Server_Has_PhysBuildMode")
+
 AddCSLuaFile("autorun/client/cl_physgun_buildmode.lua")
 local pb_ = "physgun_buildmode_"
 local buildmode_ents = {}
@@ -57,24 +56,6 @@ local function Update_Settings(ply)
 
     return false
 end
-
--- Let the client know that Physgun Build Mode is enabled on server
-local function Notify_Player(ply)
-    net.Start("Server_Has_PhysBuildMode")
-    net.Send(ply)
-end
-
-hook.Add("PlayerInitialSpawn", "Physgun Build Mode:Player Spawn", Notify_Player)
-
--- Enable buildmode for all players on file reload
-for k, ply in pairs(player.GetAll()) do
-    if IsValid(ply) then
-        Notify_Player(ply)
-    end
-end
-
--- Concommand that lets client check whether the server has Physgun Build Mode
-concommand.Add(pb_ .. "check_server", Notify_Player)
 
 --********************************************************************************************************************//
 -- Snap mechanics
