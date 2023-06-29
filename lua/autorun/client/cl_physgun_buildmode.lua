@@ -38,26 +38,37 @@ end
 hook.Add("PopulateToolMenu", "Physgun Build Mode:CustomMenuSettings", function()
     spawnmenu.AddToolMenuOption("Options", "Player", "Custom_Menu", "Physgun Build Mode", "", "", function(panel)
         panel:ClearControls()
+
         local checkbox_enabled = panel:CheckBox("Enabled", "physgun_buildmode_enabled")
         checkbox_enabled:SetTooltip("You can also use the concommand phys_buildmode to toggle on/off")
+
         local checkbox_sleep = panel:CheckBox("Sleep Instead of Freeze", pb_ .. "sleep")
         checkbox_sleep:SetTooltip("If sleep is enabled, the prop will move again if pushed or hit")
+
         panel:CheckBox("Auto Nocollide", pb_ .. "nocollide")
+
         local checkbox_norotate = panel:CheckBox("No Rotation While Moving", pb_ .. "norotate")
         checkbox_norotate:SetTooltip("GMod 9 rotation behavior")
+
         local checkbox_snap_boxcentre = panel:CheckBox("Snap by Bounding Box Centre", pb_ .. "snap_boxcentre")
         checkbox_snap_boxcentre:SetTooltip("Useful for certain props, e.g. PHX super flat plates")
+
         panel:CheckBox("Snap While Moving", pb_ .. "snapmove")
         panel:CheckBox("Snap Position", pb_ .. "snap_position")
+
         local slider_origin_x = panel:NumSlider("Grid - X", pb_ .. "grid_x", 0, 50, 4)
         slider_origin_x:SetTooltip("Sets the grid offset in the X direction")
+
         local slider_origin_y = panel:NumSlider("Grid - Y", pb_ .. "grid_y", 0, 50, 4)
         slider_origin_y:SetTooltip("Sets the grid offset in the Y direction")
+
         local slider_origin_z = panel:NumSlider("Grid - Z", pb_ .. "grid_z", 0, 50, 4)
         slider_origin_z:SetTooltip("Sets the grid offset in the Z direction")
+
         panel:NumSlider("Origin - X", pb_ .. "origin_x", -50, 50, 3)
         panel:NumSlider("Origin - Y", pb_ .. "origin_y", -50, 50, 3)
         panel:NumSlider("Origin - Z", pb_ .. "origin_z", -50, 50, 3)
+
         local button_setorigin = panel:Button("Set Origin by Entity")
         button_setorigin:SetTooltip("Set the grid offset according to the prop currently in view")
 
